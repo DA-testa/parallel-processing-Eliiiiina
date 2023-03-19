@@ -1,14 +1,16 @@
 # python3
+import heapq
+
 def parallel_processing(n, m, data):
     threads = [(0, i) for i in range(n)] 
+    heapq.heapify(threads)
     output = [] 
     for i in range(m):
         job_time = data[i] 
-        thread = min(threads) 
+        thread = heapq.heappop(threads) 
         start_time = thread[0]
         output.append((thread[1], start_time))
-        threads.remove(thread) 
-        threads.append((start_time + job_time, thread[1]))
+        heapq.heappush(threads, (start_time + job_time, thread[1]))
     return output 
 
 
